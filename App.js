@@ -1,78 +1,116 @@
-/*
 import React, { Component } from 'react';
-import { Text, View, Image, StyleSheet, TextInput } from 'react-native';
+import { Text, View, Image, StyleSheet, TextInput, Button, TouchableNativeFeedback, Platform, TouchableHighlight, TouchableOpacity, TouchableWithoutFeedback, ScrollView } from 'react-native';
+
 
 export default class Translator extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {text: '', etext: ''};
-  }
-
-  render() {
-    return (
-      <View style={{padding: 10}}>
-        <TextInput
-        style={{height: 40}}
-        placeholder="Type to translate"
-        onChangeText={(text) => this.setState({etext: text})}
-        value={this.state.etext}/>
-        <Text style={{padding: 10, fontSize: 42}}>
-          {(this.state.etext)}
-        </Text>
-      </View>
-    );
-    
-  }
-  encode = function (toCode) {
-    var letters = 'a b c d e f g h i j k l m n o p q r s t u v w x y z'.split(' ')
-    var tc = toCode.split('')
-    for(i = 0; i < toCode.length - 1; i++) {
-      if(letters.indexOf(tc[i]) < -1) {
-        tc[i] = letters[26 - (letters.indexOf(tc[i]))]
-      }
+    constructor(props) {
+        super(props);
+        this.state = { text: '' };
     }
-    return(tc)
-  }
-};
-*/
 
-import React, { Component } from 'react';
-import { Text, View, Image, StyleSheet, TextInput } from 'react-native';
-
-export default class Translator extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { text: 'the letter "d" makes a dental plosive, the letter "m" makes a nasal bilabial nasal', etext: '' };
-  }
-
-  render() {
-    return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <Text>{this.state.text}</Text>
-        <Text>{this.ATBASH(this.state.text)}</Text>
-      </View>
-    );
-
-  }
-  A1Z26 = function (toCode) {
-    var letters = 'a b c d e f g h i j k l m n o p q r s t u v w x y z'.split(' ')
-    var tc = toCode.split('')
-    for (var i = 0; i < tc.length; i++) {
-      if (letters.indexOf(tc[i]) > -1) {
-        tc[i] = '|' + (letters.indexOf(tc[i]) + 1).toString() + '|'
-      }
+    //58 :
+    //123 125 { }
+    render() {
+        return (
+            <ScrollView>
+                <View style={{ justifyContent: 'center', alignItems: 'center', fontSize: 60 }}>
+                    <Text style={{ fontSize: 80 }}>HOW</Text>
+                    <Text style={{ fontSize: 80 }}>MANY</Text>
+                    <Text style={{ fontSize: 80, color: "#FF66CC" }}>SHRIMPS</Text>
+                    <Text style={{ fontSize: 80 }}>DO</Text>
+                    <Text style={{ fontSize: 80 }}>YOU</Text>
+                    <Text style={{ fontSize: 80 }}>HAVE</Text>
+                    <Text style={{ fontSize: 80 }}>TO</Text>
+                    <Text style={{ fontSize: 80 }}>EAT{"\n"}{"\n"}{"\n"}{"\n"}{"\n"}{"\n"}{"\n"}{"\n"}{"\n"}{"\n"}</Text>
+                    <Text style={{ fontSize: 80 }}>BEFORE</Text>
+                    <Text style={{ fontSize: 80 }}>YOU</Text>
+                    <Text style={{ fontSize: 80 }}>MAKE</Text>
+                    <Text style={{ fontSize: 80 }}>YOUR</Text>
+                    <Text style={{ fontSize: 80 }}>SKIN</Text>
+                    <Text style={{ fontSize: 80 }}>TURN</Text>
+                    <Text style={{ fontSize: 80, color: "#FF66CC" }}>PINK?{"\n"}{"\n"}{"\n"}{"\n"}{"\n"}{"\n"}{"\n"}{"\n"}{"\n"}{"\n"}</Text>
+                    <Text style={{ fontSize: 80 }}>EAT</Text>
+                    <Text style={{ fontSize: 80 }}>TOO</Text>
+                    <Text style={{ fontSize: 80 }}>MUCH</Text>
+                    <Text style={{ fontSize: 80 }}>AND</Text>
+                    <Text style={{ fontSize: 80 }}>YOU'LL</Text>
+                    <Text style={{ fontSize: 80 }}>GET</Text>
+                    <Text style={{ fontSize: 80, color: "#66A103" }}>SICK{"\n"}{"\n"}{"\n"}{"\n"}{"\n"}{"\n"}{"\n"}{"\n"}{"\n"}{"\n"}</Text>
+                    <Text style={{ fontSize: 80, color: "#FF66CC" }}>SHRIMPS</Text>
+                    <Text style={{ fontSize: 80, color: "#FF66CC" }}>ARE</Text>
+                    <Text style={{ fontSize: 80, color: "#FF66CC" }}>PRETTY</Text>
+                    <Text style={{ fontSize: 80, color: "#FF66CC" }}>RICH{"\n"}{"\n"}{"\n"}{"\n"}{"\n"}{"\n"}{"\n"}{"\n"}{"\n"}{"\n"}</Text>
+                </View>
+                <Image
+                    style={{ flex: 1 }}
+                    source={require('./media/flamingo.gif')}
+                />
+                <Image
+                    style={{ flex: 1 }}
+                    source={require('./media/flamingo.gif')}
+                />
+                <Image
+                    style={{ flex: 1 }}
+                    source={require('./media/flamingo.gif')}
+                />
+                <Image
+                    style={{ flex: 1 }}
+                    source={require('./media/flamingo.gif')}
+                />
+                <Image
+                    style={{ flex: 1 }}
+                    source={require('./media/flamingo.gif')}
+                />
+                <Image
+                    style={{ flex: 1 }}
+                    source={require('./media/flamingo.gif')}
+                />
+                <Image
+                    style={{ flex: 1 }}
+                    source={require('./media/flamingo.gif')}
+                />
+                <Image
+                    style={{ flex: 1 }}
+                    source={require('./media/flamingo.gif')}
+                />
+                <Image
+                    style={{ flex: 1 }}
+                    source={require('./media/flamingo.gif')}
+                />
+                <Image
+                    style={{ flex: 1 }}
+                    source={require('./media/flamingo.gif')}
+                />
+                <Image
+                    style={{ flex: 1 }}
+                    source={require('./media/flamingo.gif')}
+                />
+                <Image
+                    style={{ flex: 1 }}
+                    source={require('./media/flamingo.gif')}
+                />
+                <Image
+                    style={{ flex: 1 }}
+                    source={require('./media/flamingo.gif')}
+                />
+                <Image
+                    style={{ flex: 1 }}
+                    source={require('./media/flamingo.gif')}
+                />
+                <Image
+                    style={{ flex: 1 }}
+                    source={require('./media/flamingo.gif')}
+                />
+                <Image
+                    style={{ flex: 1 }}
+                    source={require('./media/flamingo.gif')}
+                />
+                 <Image
+                    style={{ flex: 1 }}
+                    source={require('./media/flamingo.gif')}
+                />
+                
+            </ScrollView>
+        );
     }
-    return (tc)
-  }
-
-  ATBASH = function (toCode) {
-    var letters = 'a b c d e f g h i j k l m n o p q r s t u v w x y z'.split(' ')
-    var tc = this.A1Z26(toCode)
-    for(i = 0; i < tc.length; i++) {
-      if(tc[i].indexOf('|') == 0 && tc[i].indexOf('|', tc[i].indexOf('|')) + 1 == tc[i].length){
-        tc[i]
-      }
-    }
-    return (tc)
-  }
 };
