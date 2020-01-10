@@ -4,7 +4,7 @@ import { Text, View, Image, StyleSheet, TextInput } from 'react-native';
 export default class Translator extends Component {
   constructor(props) {
     super(props);
-    this.state = { text: ''};
+    this.state = { text: '', sub: 'a,1,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z'};
   }
 
   render() {
@@ -16,7 +16,7 @@ export default class Translator extends Component {
         onChangeText={(text) => this.setState({text})}
         value={this.state.text}
         />
-        <Text>{this.ATBASH(this.state.text)}</Text>
+        <Text>{this.SUB(this.state.text)}</Text>
       </View>
     );
 
@@ -37,4 +37,19 @@ export default class Translator extends Component {
 
     return(tc)
   }
+
+  SUB = function (toCode) {
+    var sub = this.state.sub.split(',')
+    var letters = 'abcdefghijklmnopqrstuvwxyz'
+    var tc = toCode.toLowerCase().split('')
+    for(var i = 0; i < tc.length; i++) {
+      if(letters.indexOf(tc[i]) > -1) {
+        tc[i] = sub[letters.indexOf(tc[i])]
+      }
+    }
+
+    return(tc)
+  }
+
+
 };

@@ -1,83 +1,115 @@
 import React, { Component } from 'react';
 import { Text, View, Image, StyleSheet, TextInput, Button, TouchableNativeFeedback, Platform, TouchableHighlight, TouchableOpacity, TouchableWithoutFeedback, ScrollView, FlatList, SectionList, DrawerLayoutAndroid, PanResponder, Animated } from 'react-native';
+import { removeOrientationChangeListener } from 'expo/build/ScreenOrientation/ScreenOrientation';
 
 export default class FieldCypher extends Component {
 
     constructor(props) {
         super(props);
 
-        this.state = {
-            pan: new Animated.ValueXY()
-        };
-    }
-
-    UNSAFE_componentWillMount() {
-        this._panResponder = PanResponder.create({
-            onMoveShouldSetResponderCapture: () => true,
-            onMoveShouldSetPanResponderCapture: () => true,
-
-            // Initially, set the value of x and y to 0 (the center of the screen)
-            onPanResponderGrant: (e, gestureState) => {
-                // Set the initial value to the current state
-                this.state.pan.setOffset({ x: this.state.pan.x._value, y: this.state.pan.y._value });
-                this.state.pan.setValue({ x: 0, y: 0 });
-            },
-
-            // When we drag/pan the object, set the delate to the states pan position
-            onPanResponderMove: Animated.event([
-                null, { dx: this.state.pan.x, dy: 0 },
-            ]),
-
-            onPanResponderRelease: (e, { vx, vy }) => {
-                this.state.pan.flattenOffset();
-            }
-        });
+        this.state = { text: '', cypher: 'Substitution', sub: 'a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z' };
+        this.switchToPoly = this.switchToPoly.bind(this)
+        this.switchToSub = this.switchToSub.bind(this)
+        this.switchSubToAtbash = this.switchSubToAtbash.bind(this)
+        this.resetSub = this.resetSub.bind(this)
     }
 
     render() {
-
-        let { pan } = this.state;
-
-        let [translateX, translateY] = [pan.x, pan.y];
-
-        let imageStyle = { transform: [{ translateX }, { translateY }] };
-
-        return (
-            <View style={styles.container}>
-                <Animated.View style={imageStyle} {...this._panResponder.panHandlers}>
-                    <View style={{ height: 740, backgroundColor: '#D4B64A', left: -330 }} ></View>
-                </Animated.View>
+        let button;
+        if (this.state.cypher == 'Substitution') {
+            button = 
+            <View>
+            <Button
+            onPress={this.switchSubToAtbash}
+            title="Atbash Template"
+            />
+            <Button
+            onPress={this.resetSub}
+            title="Reset substitution template"
+            />
             </View>
+        } else {
+            button = <Text/>
+        }
+        return (
+
+            <View style={{ flex: 1 }}>
+                <View style={{ flex: 1, alignItems: 'center', backgroundColor: '#000000' }}>
+                    <Text style={{ fontSize: 24, padding: 30, color: '#FFFFFF' }}>Cypher Field App</Text>
+                </View>
+                <View style={{ flex: 9, backgroundColor: '#FFFFFF', alignItems: 'stretch' }}>
+                    <View style={{ height: 60, justifyContent: 'center', backgroundColor: '#D44A85' }}>
+                        <TextInput
+                            style={{ height: 40, textAlign: 'center' }}
+                            placeholder='Type to encode'
+                            onChangeText={(text) => this.setState({ text })}
+                            value={this.state.text}
+                        />
+                    </View>
+                    <View style={{ height: 60, alignItems: 'center', backgroundColor: '#d44f4a' }}>
+                        <Text style={{ fontSize: 45 }}>&#8595;{this.state.cypher}&#8595;</Text>
+                    </View>
+                    <View style={{ height: 60, alignItems: 'center', justifyContent: 'center', backgroundColor: '#4ABFD4' }}>
+                        <Text>{this.SUB(this.state.text)}</Text>
+                    </View>
+                    <View style={{ justifyContent: 'center' }}>
+                        {button}
+                        <Text style={{ textAlign: 'center' }}>
+                            CYPHERS &#8595;
+                        </Text>
+                    </View>
+                    <View>
+                        <Button
+                            onPress={this.switchToPoly}
+                            title="Polybius square"
+                        />
+                        <Button
+                            onPress={this.switchToSub}
+                            title="Substitution"
+                        />
+                    </View>
+                </View>
+            </View>
+
         );
     }
 
+    switchToPoly = function () {
+        this.setState({
+            cypher: 'Polybius'
+        })
+    }
+    switchToSub = function () {
+        this.setState({
+            cypher: 'Substitution'
+        })
+    }
 
-    ATBASH = function (toCode) {
+    switchSubToAtbash = function () {
+        this.setState({
+            sub: 'z,y,x,w,v,u,t,s,r,q,p,o,n,m,l,k,j,i,h,g,f,e,d,c,b,a'
+        })
+    }
+
+    resetSub = function () {
+        this.setState({
+            sub: 'a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z'
+        })
+    }
+
+    SUB = function (toCode) {
+        var sub = this.state.sub.split(',')
         var letters = 'abcdefghijklmnopqrstuvwxyz'
-        var tc = toCode.split('')
+        var tc = toCode.toLowerCase().split('')
         for (var i = 0; i < tc.length; i++) {
             if (letters.indexOf(tc[i]) > -1) {
-                tc[i] = letters.split('')[25 - letters.indexOf(tc[i])]
-            } else {
-                if (letters.toUpperCase().indexOf(tc[i]) > -1) {
-                    tc[i] = letters.toUpperCase().split('')[25 - letters.toUpperCase().indexOf(tc[i])]
-                }
+                tc[i] = sub[letters.indexOf(tc[i])]
             }
         }
 
         return (tc)
     }
 }
-
-let CIRCLE_RADIUS = 30;
-let styles = StyleSheet.create({
-    circle: {
-        backgroundColor: "skyblue",
-        width: CIRCLE_RADIUS * 2,
-        height: CIRCLE_RADIUS * 2,
-        borderRadius: CIRCLE_RADIUS
-    }
-});
 
 
 
