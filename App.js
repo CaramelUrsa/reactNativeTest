@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, Image, StyleSheet, TextInput, Button, TouchableNativeFeedback, Platform, TouchableHighlight, TouchableOpacity, TouchableWithoutFeedback, ScrollView, FlatList, SectionList, DrawerLayoutAndroid, PanResponder, Animated, Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native';
+import { Text, View, Image, StyleSheet, TextInput, Button, TouchableNativeFeedback, Platform, TouchableHighlight, TouchableOpacity, TouchableWithoutFeedback, ScrollView, FlatList, SectionList, DrawerLayoutAndroid, PanResponder, Animated, Table, TableWrapper, Rows, Cols, Cell } from 'react-native';
 import { removeOrientationChangeListener } from 'expo/build/ScreenOrientation/ScreenOrientation';
 
 export default class FieldCypher extends Component {
@@ -9,8 +9,10 @@ export default class FieldCypher extends Component {
 
         this.state = {
             text: '',
-            cypher: 'Substitution',
+            think: '',
+            cypher: 'Polybius',
             subst: 'a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z',
+            substate: 'a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z',
         };
         this.letters = 'abcdefghijklmnopqrstuvwxyz'
         this.switchToPoly = this.switchToPoly.bind(this)
@@ -19,38 +21,23 @@ export default class FieldCypher extends Component {
         this.resetSub = this.resetSub.bind(this)
         this.changesub = this.changesub.bind(this)
         this.test = this.test.bind(this)
+        this.compairitor = this.compairitor.bind(this)
     }
 
     render() {
-
-        //class Editbox extends Component {
-        //    render() {
-        //        return (
-        //            <TextInput
-        //                style={{ height: 20, textAlign: 'center' }}
-        //                placeholder={this.props.letter}
-        //                onChangeText={(text) => this.changesub(this.props.letter, text)}
-        //            />
-        //        )
-        //    }
-        //}
-
-        let Editbox =
-            < TextInput
-                style={{ height: 20, textAlign: 'center' }
-                }
-                placeholder={this.props.letter}
-                onChangeText={(text) => this.changesub(this.props.letter, text)}
-            />
-
-
-
         let button;
         if (this.state.cypher == 'Substitution') {
             button =
                 <View>
+                    <TextInput
+                        style={{ height: 20, textAlign: 'center', textAlignVertical: 'center' }}
+                        placeholder='seperate by commas'
+                        onChangeText={(text) => this.compairitor(text)
+                        }
+                        value={this.state.subst}
+                    />
                     <Text style={{ textAlign: 'center' }}>
-                        {this.state.test}
+                        {this.state.thing}
                     </Text>
                     <Button
                         onPress={this.switchSubToAtbash}
@@ -62,7 +49,61 @@ export default class FieldCypher extends Component {
                     />
                 </View>
         } else {
-            button = <Text />
+            if (this.state.cypher == 'Polybius') {
+                button =
+                    <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                        <View style={{ flexDirection: 'row' }}>
+                            <View style={{ flexDirection: 'column' }}>
+                                <View style={styles.blankCell}><Text></Text></View>
+                                <View style={styles.cell}><Text style={styles.cellText}>1</Text></View>
+                                <View style={styles.cell}><Text style={styles.cellText}>2</Text></View>
+                                <View style={styles.cell}><Text style={styles.cellText}>3</Text></View>
+                                <View style={styles.cell}><Text style={styles.cellText}>4</Text></View>
+                                <View style={styles.cell}><Text style={styles.cellText}>5</Text></View>
+                            </View>
+                            <View style={{ flexDirection: 'column' }}>
+                                <View style={styles.cell}><Text style={styles.cellText}>1</Text></View>
+                                <View style={styles.cell}><Text style={styles.cellText}>A</Text></View>
+                                <View style={styles.cell}><Text style={styles.cellText}>F</Text></View>
+                                <View style={styles.cell}><Text style={styles.cellText}>L</Text></View>
+                                <View style={styles.cell}><Text style={styles.cellText}>Q</Text></View>
+                                <View style={styles.cell}><Text style={styles.cellText}>V</Text></View>
+                            </View>
+                            <View style={{ flexDirection: 'column' }}>
+                                <View style={styles.cell}><Text style={styles.cellText}>2</Text></View>
+                                <View style={styles.cell}><Text style={styles.cellText}>B</Text></View>
+                                <View style={styles.cell}><Text style={styles.cellText}>G</Text></View>
+                                <View style={styles.cell}><Text style={styles.cellText}>M</Text></View>
+                                <View style={styles.cell}><Text style={styles.cellText}>R</Text></View>
+                                <View style={styles.cell}><Text style={styles.cellText}>W</Text></View>
+                            </View>
+                            <View style={{ flexDirection: 'column' }}>
+                                <View style={styles.cell}><Text style={styles.cellText}>3</Text></View>
+                                <View style={styles.cell}><Text style={styles.cellText}>C</Text></View>
+                                <View style={styles.cell}><Text style={styles.cellText}>H</Text></View>
+                                <View style={styles.cell}><Text style={styles.cellText}>N</Text></View>
+                                <View style={styles.cell}><Text style={styles.cellText}>S</Text></View>
+                                <View style={styles.cell}><Text style={styles.cellText}>X</Text></View>
+                            </View>
+                            <View style={{ flexDirection: 'column' }}>
+                                <View style={styles.cell}><Text style={styles.cellText}>4</Text></View>
+                                <View style={styles.cell}><Text style={styles.cellText}>D</Text></View>
+                                <View style={styles.cell}><Text style={styles.cellText}>I/J</Text></View>
+                                <View style={styles.cell}><Text style={styles.cellText}>O</Text></View>
+                                <View style={styles.cell}><Text style={styles.cellText}>T</Text></View>
+                                <View style={styles.cell}><Text style={styles.cellText}>Y</Text></View>
+                            </View>
+                            <View style={{ flexDirection: 'column' }}>
+                                <View style={styles.cell}><Text style={styles.cellText}>5</Text></View>
+                                <View style={styles.cell}><Text style={styles.cellText}>E</Text></View>
+                                <View style={styles.cell}><Text style={styles.cellText}>K</Text></View>
+                                <View style={styles.cell}><Text style={styles.cellText}>P</Text></View>
+                                <View style={styles.cell}><Text style={styles.cellText}>U</Text></View>
+                                <View style={styles.cell}><Text style={styles.cellText}>Z</Text></View>
+                            </View>
+                        </View>
+                    </View>
+            }
         }
         return (
 
@@ -83,7 +124,7 @@ export default class FieldCypher extends Component {
                         <Text style={{ fontSize: 45 }}>&#8595;{this.state.cypher}&#8595;</Text>
                     </View>
                     <View style={{ height: 60, alignItems: 'center', justifyContent: 'center', backgroundColor: '#4ABFD4' }}>
-                        <Text>{this.SUB(this.state.text)}</Text>
+                        <Text>{this.dis(this.state.text)}</Text>
                     </View>
                     <View style={{ justifyContent: 'center' }}>
                         {button}
@@ -104,9 +145,7 @@ export default class FieldCypher extends Component {
                             onPress={this.test}
                             title="test"
                         />
-                        <View letter='a'>
-                        {Editbox}
-                        </View>
+
                     </View>
                 </View>
             </View>
@@ -126,6 +165,20 @@ export default class FieldCypher extends Component {
         this.setState({
             subst: changing.toString()
         })
+    }
+
+    compairitor = function (textp) {
+        var commaCount = 0
+        for (var i = 0; i < textp.length; i++) {
+            if (textp.charAt(i) == ',') {
+                commaCount++
+            }
+        }
+        if (commaCount == 25) {
+            this.setState({
+                subst: textp
+            })
+        }
     }
 
     switchToPoly = function () {
@@ -151,6 +204,25 @@ export default class FieldCypher extends Component {
         })
     }
 
+    POLY = function (text) {
+        square = {rows: [["A","B","C","D","E"],["F","G","H","I","K"],["L","M","N","O","P"],["Q","R","S","T","U"],["V","W","X","Y","Z"]]}
+        tc = text.split('')
+        for (var i = 0; i < 5; i++) {
+            for (var x = 0; i < 5; x++) {
+                var 
+            }
+        }
+    }
+
+    dis = function (text) {
+        if(this.state.cypher == 'Substitution') {
+            return(this.SUB(text))
+        }
+        if(this.state.cypher == 'Polybius') {
+            return(this.POLY(text))
+        }
+    }
+
     SUB = function (toCode) {
         var subst = this.state.subst.split(',')
         var tc = toCode.toLowerCase().split('')
@@ -166,69 +238,23 @@ export default class FieldCypher extends Component {
 
 
 const styles = StyleSheet.create({
-    bigblue: {
+    cell: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: 50,
+        width: 50,
+        color: '#FFFFFF',
+        borderColor: 'black',
+        borderWidth: 5
+    },
+    blankCell: {
         textAlignVertical: 'center',
         textAlign: 'center',
-        height: 30,
-        width: 30,
-        color: 'blue',
-        fontWeight: 'bold',
-        fontSize: 20,
-        borderColor: 'black',
-        borderWidth: 1
+        height: 50,
+        width: 50,
+        color: '#FFFFFF',
+    },
+    cellText: {
+        fontSize: 24,
     }
 });
-
-
-/*
-{data.map((_, i) => (
-                            <View
-                                key={i}
-                                style={{
-                                    position: 'absolute',
-                                    backgroundColor: gradientBackground,
-                                    height: 1,
-                                    bottom: (gradientHeight - i - 1),
-                                    right: 0,
-                                    left: 0,
-                                    zIndex: 2,
-                                    opacity: (1 / gradientHeight) * (i + 1)
-                                }}
-                            />
-                        ))}
-*/
-
-
-
-/*
-render() {
-        return (
-
-            <View style={{ flex: 1 }}>
-                <View style={{ flex: 1, alignItems: 'center', backgroundColor: '#000000' }}>
-                    <Text style={{ fontSize: 24, padding: 30, color: '#FFFFFF' }}>Cypher Field App</Text>
-                </View>
-                <View style={{ flex: 9, backgroundColor: '#FFFFFF', alignItems: 'stretch' }}>
-                    <View style={{ height: 60, justifyContent: 'center', backgroundColor: '#D44A85' }}>
-                        <TextInput
-                            style={{ height: 40, textAlign: 'center' }}
-                            placeholder='Type to encode'
-                            onChangeText={(text) => this.setState({ text })}
-                            value={this.state.text}
-                        />
-                    </View>
-                    <View style={{ height: 60, alignItems: 'center', backgroundColor: '#d44f4a' }}>
-                        <Text style={{ fontSize: 69, top: -18 }}>&#8595;AZBY&#8595;</Text>
-                    </View>
-                    <View style={{ height: 60, alignItems: 'center', justifyContent: 'center', backgroundColor: '#4ABFD4' }}>
-
-                        <Text>
-                            {this.ATBASH(this.state.text)}
-                        </Text>
-                    </View>
-                </View>
-            </View>
-
-        );
-    }
-*/
