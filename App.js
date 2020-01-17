@@ -51,7 +51,7 @@ export default class FieldCypher extends Component {
         } else {
             if (this.state.cypher == 'Polybius') {
                 button =
-                    <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                    <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                         <View style={{ flexDirection: 'row' }}>
                             <View style={{ flexDirection: 'column' }}>
                                 <View style={styles.blankCell}><Text></Text></View>
@@ -204,22 +204,35 @@ export default class FieldCypher extends Component {
         })
     }
 
-    POLY = function (text) {
-        square = {rows: [["A","B","C","D","E"],["F","G","H","I","K"],["L","M","N","O","P"],["Q","R","S","T","U"],["V","W","X","Y","Z"]]}
-        tc = text.split('')
-        for (var i = 0; i < 5; i++) {
-            for (var x = 0; i < 5; x++) {
-                var 
+    a1z26 = function (toCode) {
+        var subst = toCode.toLowerCase().split("")
+        for (var i = 0; i < subst.length; i++) {
+            if (this.letters.indexOf(subst[i]) > -1) {
+                subst[i] = this.letters.indexOf(subst[i]) + 1
             }
+        }
+        subst = subst.toString()
+        return (subst)
+    }
+
+    PentiDec = function (toenc) {
+        if (toenc) {
+            var toc = toenc.split(",")
+            for (var i = 0; i < toc.length; i++) {
+                var ones = (Math.floor(toc[i]/5) + 1).toString()
+                var tens = (toc[i] % 5).toString()
+                toc[i] = ' {' + ones + ',' + tens + '} '
+            }
+            return (toc)
         }
     }
 
     dis = function (text) {
-        if(this.state.cypher == 'Substitution') {
-            return(this.SUB(text))
+        if (this.state.cypher == 'Substitution') {
+            return (this.SUB(text))
         }
-        if(this.state.cypher == 'Polybius') {
-            return(this.POLY(text))
+        if (this.state.cypher == 'Polybius') {
+            return (this.PentiDec(this.a1z26(text)))
         }
     }
 
@@ -231,7 +244,7 @@ export default class FieldCypher extends Component {
                 tc[i] = subst[this.letters.indexOf(tc[i])]
             }
         }
-
+        tc = tc.toString()
         return (tc)
     }
 }
