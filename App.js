@@ -205,10 +205,11 @@ export default class FieldCypher extends Component {
     }
 
     a1z26 = function (toCode) {
-        var subst = toCode.toLowerCase().split("")
+        var letters = 'abcdefghiklmnopqrstuvwxyz'
+        var subst = toCode.toLowerCase().replace(/j/g,'i').split("")
         for (var i = 0; i < subst.length; i++) {
             if (this.letters.indexOf(subst[i]) > -1) {
-                subst[i] = this.letters.indexOf(subst[i]) + 1
+                subst[i] = this.letters.indexOf(subst[i])
             }
         }
         subst = subst.toString()
@@ -220,7 +221,7 @@ export default class FieldCypher extends Component {
             var toc = toenc.split(",")
             for (var i = 0; i < toc.length; i++) {
                 var ones = (Math.floor(toc[i]/5) + 1).toString()
-                var tens = (toc[i] % 5).toString()
+                var tens = (toc[i] % 5 + 1).toString()
                 toc[i] = ' {' + ones + ',' + tens + '} '
             }
             return (toc)
