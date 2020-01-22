@@ -18,6 +18,7 @@ export default class FieldCypher extends Component {
         this.switchToPoly = this.switchToPoly.bind(this)
         this.switchToSub = this.switchToSub.bind(this)
         this.switchSubToAtbash = this.switchSubToAtbash.bind(this)
+        this.switchTouwu = this.switchTouwu.bind(this)
         this.resetSub = this.resetSub.bind(this)
         this.changesub = this.changesub.bind(this)
         this.test = this.test.bind(this)
@@ -142,8 +143,8 @@ export default class FieldCypher extends Component {
                             title="Substitution"
                         />
                         <Button
-                            onPress={this.test}
-                            title="test"
+                            onPress={this.switchTouwu}
+                            title="OwO"
                         />
 
                     </View>
@@ -191,6 +192,11 @@ export default class FieldCypher extends Component {
             cypher: 'Substitution'
         })
     }
+    switchTouwu = function () {
+        this.setState({
+            cypher: 'OwO'
+        })
+    }
 
     switchSubToAtbash = function () {
         this.setState({
@@ -206,10 +212,10 @@ export default class FieldCypher extends Component {
 
     a1z26 = function (toCode) {
         var letters = 'abcdefghiklmnopqrstuvwxyz'
-        var subst = toCode.toLowerCase().replace(/j/g,'i').split("")
+        var subst = toCode.toLowerCase().replace(/j/g, 'i').split("")
         for (var i = 0; i < subst.length; i++) {
             if (this.letters.indexOf(subst[i]) > -1) {
-                subst[i] = this.letters.indexOf(subst[i])
+                subst[i] = letters.indexOf(subst[i])
             }
         }
         subst = subst.toString()
@@ -220,9 +226,11 @@ export default class FieldCypher extends Component {
         if (toenc) {
             var toc = toenc.split(",")
             for (var i = 0; i < toc.length; i++) {
-                var ones = (Math.floor(toc[i]/5) + 1).toString()
-                var tens = (toc[i] % 5 + 1).toString()
-                toc[i] = ' {' + ones + ',' + tens + '} '
+                if (toc[i] != ' ') {
+                    var ones = (Math.floor(toc[i] / 5) + 1).toString()
+                    var tens = (toc[i] % 5 + 1).toString()
+                    toc[i] = ones + tens + ','
+                }
             }
             return (toc)
         }
@@ -235,6 +243,14 @@ export default class FieldCypher extends Component {
         if (this.state.cypher == 'Polybius') {
             return (this.PentiDec(this.a1z26(text)))
         }
+        if (this.state.cypher == 'OwO') {
+            return (this.degen(text))
+        }
+    }
+
+    degen = function (text) {
+        var ret = text.replace(/r/g,'w').replace(/l/g,'w').replace(/R/g,'W').replace(/L/g,'W')
+        return(ret)        
     }
 
     SUB = function (toCode) {
