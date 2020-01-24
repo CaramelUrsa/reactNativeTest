@@ -10,7 +10,7 @@ export default class FieldCypher extends Component {
         this.state = {
             text: '',
             think: '',
-            cypher: 'Polybius',
+            cypher: 'Substitution',
             subst: 'a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z',
             substate: 'a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z',
         };
@@ -18,11 +18,11 @@ export default class FieldCypher extends Component {
         this.switchToPoly = this.switchToPoly.bind(this)
         this.switchToSub = this.switchToSub.bind(this)
         this.switchSubToAtbash = this.switchSubToAtbash.bind(this)
-        this.switchTouwu = this.switchTouwu.bind(this)
         this.resetSub = this.resetSub.bind(this)
         this.changesub = this.changesub.bind(this)
         this.test = this.test.bind(this)
         this.compairitor = this.compairitor.bind(this)
+        this.switchToPolyDec = this.switchToPolyDec.bind(this)
     }
 
     render() {
@@ -50,57 +50,67 @@ export default class FieldCypher extends Component {
                     />
                 </View>
         } else {
-            if (this.state.cypher == 'Polybius') {
+            if (this.state.cypher.slice(0,8) == 'Polybius') {
                 button =
-                    <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                        <View style={{ flexDirection: 'row' }}>
-                            <View style={{ flexDirection: 'column' }}>
-                                <View style={styles.blankCell}><Text></Text></View>
-                                <View style={styles.cell}><Text style={styles.cellText}>1</Text></View>
-                                <View style={styles.cell}><Text style={styles.cellText}>2</Text></View>
-                                <View style={styles.cell}><Text style={styles.cellText}>3</Text></View>
-                                <View style={styles.cell}><Text style={styles.cellText}>4</Text></View>
-                                <View style={styles.cell}><Text style={styles.cellText}>5</Text></View>
-                            </View>
-                            <View style={{ flexDirection: 'column' }}>
-                                <View style={styles.cell}><Text style={styles.cellText}>1</Text></View>
-                                <View style={styles.cell}><Text style={styles.cellText}>A</Text></View>
-                                <View style={styles.cell}><Text style={styles.cellText}>F</Text></View>
-                                <View style={styles.cell}><Text style={styles.cellText}>L</Text></View>
-                                <View style={styles.cell}><Text style={styles.cellText}>Q</Text></View>
-                                <View style={styles.cell}><Text style={styles.cellText}>V</Text></View>
-                            </View>
-                            <View style={{ flexDirection: 'column' }}>
-                                <View style={styles.cell}><Text style={styles.cellText}>2</Text></View>
-                                <View style={styles.cell}><Text style={styles.cellText}>B</Text></View>
-                                <View style={styles.cell}><Text style={styles.cellText}>G</Text></View>
-                                <View style={styles.cell}><Text style={styles.cellText}>M</Text></View>
-                                <View style={styles.cell}><Text style={styles.cellText}>R</Text></View>
-                                <View style={styles.cell}><Text style={styles.cellText}>W</Text></View>
-                            </View>
-                            <View style={{ flexDirection: 'column' }}>
-                                <View style={styles.cell}><Text style={styles.cellText}>3</Text></View>
-                                <View style={styles.cell}><Text style={styles.cellText}>C</Text></View>
-                                <View style={styles.cell}><Text style={styles.cellText}>H</Text></View>
-                                <View style={styles.cell}><Text style={styles.cellText}>N</Text></View>
-                                <View style={styles.cell}><Text style={styles.cellText}>S</Text></View>
-                                <View style={styles.cell}><Text style={styles.cellText}>X</Text></View>
-                            </View>
-                            <View style={{ flexDirection: 'column' }}>
-                                <View style={styles.cell}><Text style={styles.cellText}>4</Text></View>
-                                <View style={styles.cell}><Text style={styles.cellText}>D</Text></View>
-                                <View style={styles.cell}><Text style={styles.cellText}>I/J</Text></View>
-                                <View style={styles.cell}><Text style={styles.cellText}>O</Text></View>
-                                <View style={styles.cell}><Text style={styles.cellText}>T</Text></View>
-                                <View style={styles.cell}><Text style={styles.cellText}>Y</Text></View>
-                            </View>
-                            <View style={{ flexDirection: 'column' }}>
-                                <View style={styles.cell}><Text style={styles.cellText}>5</Text></View>
-                                <View style={styles.cell}><Text style={styles.cellText}>E</Text></View>
-                                <View style={styles.cell}><Text style={styles.cellText}>K</Text></View>
-                                <View style={styles.cell}><Text style={styles.cellText}>P</Text></View>
-                                <View style={styles.cell}><Text style={styles.cellText}>U</Text></View>
-                                <View style={styles.cell}><Text style={styles.cellText}>Z</Text></View>
+                    <View>
+                        <Button
+                            onPress={this.switchToPolyDec}
+                            title="DECODE"
+                        />
+                        <Button
+                            onPress={this.switchToPoly}
+                            title="ENCODE"
+                        />
+                        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                            <View style={{ flexDirection: 'row' }}>
+                                <View style={{ flexDirection: 'column' }}>
+                                    <View style={styles.blankCell}><Text></Text></View>
+                                    <View style={styles.cell}><Text style={styles.cellText}>1</Text></View>
+                                    <View style={styles.cell}><Text style={styles.cellText}>2</Text></View>
+                                    <View style={styles.cell}><Text style={styles.cellText}>3</Text></View>
+                                    <View style={styles.cell}><Text style={styles.cellText}>4</Text></View>
+                                    <View style={styles.cell}><Text style={styles.cellText}>5</Text></View>
+                                </View>
+                                <View style={{ flexDirection: 'column' }}>
+                                    <View style={styles.cell}><Text style={styles.cellText}>1</Text></View>
+                                    <View style={styles.cell}><Text style={styles.cellText}>A</Text></View>
+                                    <View style={styles.cell}><Text style={styles.cellText}>F</Text></View>
+                                    <View style={styles.cell}><Text style={styles.cellText}>L</Text></View>
+                                    <View style={styles.cell}><Text style={styles.cellText}>Q</Text></View>
+                                    <View style={styles.cell}><Text style={styles.cellText}>V</Text></View>
+                                </View>
+                                <View style={{ flexDirection: 'column' }}>
+                                    <View style={styles.cell}><Text style={styles.cellText}>2</Text></View>
+                                    <View style={styles.cell}><Text style={styles.cellText}>B</Text></View>
+                                    <View style={styles.cell}><Text style={styles.cellText}>G</Text></View>
+                                    <View style={styles.cell}><Text style={styles.cellText}>M</Text></View>
+                                    <View style={styles.cell}><Text style={styles.cellText}>R</Text></View>
+                                    <View style={styles.cell}><Text style={styles.cellText}>W</Text></View>
+                                </View>
+                                <View style={{ flexDirection: 'column' }}>
+                                    <View style={styles.cell}><Text style={styles.cellText}>3</Text></View>
+                                    <View style={styles.cell}><Text style={styles.cellText}>C</Text></View>
+                                    <View style={styles.cell}><Text style={styles.cellText}>H</Text></View>
+                                    <View style={styles.cell}><Text style={styles.cellText}>N</Text></View>
+                                    <View style={styles.cell}><Text style={styles.cellText}>S</Text></View>
+                                    <View style={styles.cell}><Text style={styles.cellText}>X</Text></View>
+                                </View>
+                                <View style={{ flexDirection: 'column' }}>
+                                    <View style={styles.cell}><Text style={styles.cellText}>4</Text></View>
+                                    <View style={styles.cell}><Text style={styles.cellText}>D</Text></View>
+                                    <View style={styles.cell}><Text style={styles.cellText}>I/J</Text></View>
+                                    <View style={styles.cell}><Text style={styles.cellText}>O</Text></View>
+                                    <View style={styles.cell}><Text style={styles.cellText}>T</Text></View>
+                                    <View style={styles.cell}><Text style={styles.cellText}>Y</Text></View>
+                                </View>
+                                <View style={{ flexDirection: 'column' }}>
+                                    <View style={styles.cell}><Text style={styles.cellText}>5</Text></View>
+                                    <View style={styles.cell}><Text style={styles.cellText}>E</Text></View>
+                                    <View style={styles.cell}><Text style={styles.cellText}>K</Text></View>
+                                    <View style={styles.cell}><Text style={styles.cellText}>P</Text></View>
+                                    <View style={styles.cell}><Text style={styles.cellText}>U</Text></View>
+                                    <View style={styles.cell}><Text style={styles.cellText}>Z</Text></View>
+                                </View>
                             </View>
                         </View>
                     </View>
@@ -142,10 +152,6 @@ export default class FieldCypher extends Component {
                             onPress={this.switchToSub}
                             title="Substitution"
                         />
-                        <Button
-                            onPress={this.switchTouwu}
-                            title="OwO"
-                        />
 
                     </View>
                 </View>
@@ -184,17 +190,19 @@ export default class FieldCypher extends Component {
 
     switchToPoly = function () {
         this.setState({
-            cypher: 'Polybius'
+            cypher: 'Polybius(E)'
         })
     }
+
+    switchToPolyDec = function () {
+        this.setState({
+            cypher: 'Polybius(D)'
+        })
+    }
+
     switchToSub = function () {
         this.setState({
             cypher: 'Substitution'
-        })
-    }
-    switchTouwu = function () {
-        this.setState({
-            cypher: 'OwO'
         })
     }
 
@@ -236,21 +244,26 @@ export default class FieldCypher extends Component {
         }
     }
 
+    polydec = function (text) {
+        var letters = 'a,b,c,d,e,f,g,h,(i/j),k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z'.split(',')
+        var x = text.split(',')
+        for(var i = 0; i < x.length; i++) {
+            var tens = (parseInt(x[i].slice(0,1)) - 1) * 5;
+            x[i] = letters[tens + (parseInt(x[i].slice(1,2)) -1)];
+        }
+        return(x.toString())
+    }
+
     dis = function (text) {
         if (this.state.cypher == 'Substitution') {
             return (this.SUB(text))
         }
-        if (this.state.cypher == 'Polybius') {
+        if (this.state.cypher == 'Polybius(E)') {
             return (this.PentiDec(this.a1z26(text)))
         }
-        if (this.state.cypher == 'OwO') {
-            return (this.degen(text))
+        if (this.state.cypher == 'Polybius(D)') {
+            return (this.polydec(text))
         }
-    }
-
-    degen = function (text) {
-        var ret = text.replace(/r/g,'w').replace(/l/g,'w').replace(/R/g,'W').replace(/L/g,'W')
-        return(ret)        
     }
 
     SUB = function (toCode) {
